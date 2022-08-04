@@ -1,0 +1,108 @@
+class human:
+    def __init__(self, surname, name, middle_name = None):
+        self.name = name
+        self.surname = surname
+        self.middle_name = middle_name
+
+    def status(self):
+        if isinstance(self, student):
+            return 'student'
+        elif isinstance(self, professor):
+            return 'professor'
+        elif isinstance(self, worker):
+            return 'worker'
+        else:
+            return 'There is no such person in list'
+
+
+
+class student(human):
+    all_rating = []
+    all_students = {}
+    def __init__(self, surname, name, middle_name, group, rating):
+        human.__init__(self, name, surname, middle_name = None)
+        self.__group = group
+        self.__rating = rating
+        student.all_rating += rating
+        student.all_students[f'{surname} {name} {middle_name}'] = group
+
+
+
+    def getRating(self):
+        return self.__rating
+
+    def getStudentGroup(self):
+        return self.__group
+
+    def setStudentGroup(self, newGroup, ExistGroup):
+        if len(newGroup)==2 or len(newGroup)==3:
+            self.__group = newGroup
+            return 'This student '
+        else:
+            return 'Such group does not exist'
+
+    @classmethod
+    def getAverageRating(cls):
+        return sum(cls.all_rating)/len(cls.all_rating)
+
+    @classmethod
+    def getStudents(cls, group):
+        students = []
+        for key, value in student.all_students.items():
+            if group in value:
+                students.append(key)
+        return students
+
+
+
+class professor(human):
+    all_professors = {}
+    def __init__(self, surname, name, middle_name, subject, work_experience, salary, lead_groups):
+        human.__init__(self, name, surname, middle_name=None)
+        self.__subject = subject
+        self.__work_experience = work_experience
+        self.__salary = salary
+        self.__lead_groups = lead_groups
+        professor.all_professors[f'{surname} {name} {middle_name}'] = subject
+
+
+    def getSalary(self):
+        return self.__salary
+
+
+    def getWorkExperience(self):
+        return f'This professor has {self.__work_experience} years of experience'
+
+    def CheckGroup(self, group):
+        if group in self.__lead_groups:
+            return 'This professor teaches in this group'
+        else:
+            return 'This professor doesn\'t teach in this group'
+
+    @classmethod
+    def getSubject(cls, surname, name, middle_name):
+        for key, value in cls.all_professors.items():
+            if f'{surname} {name} {middle_name}'.lower() in key.lower():
+                return f'Профессор {key} преподает предмет: {value}'
+        return 'There is no such professor'
+
+
+
+class worker(human):
+    all_salaries= []
+    def __init__(self, job_title, work_experience, salary, company):
+        self.job_title = job_title
+        self.work_experience = work_experience
+        self.__salary = salary
+        self.company = company
+        worker.all_salaries += salary
+
+
+    def getSalary(self):
+        return self.__salary
+
+    def getJobTitle(self):
+        return self.job_title
+
+    def meanSalary(cls):
+        return sum(worker.all_salaries)/len(worker.all_salaries)
