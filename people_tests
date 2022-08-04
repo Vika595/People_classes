@@ -1,0 +1,27 @@
+from People_classes import *
+surname= 'Антонов'
+name='Виталий'
+middle_name='Циренович'
+sub = 'Философия'
+work_exp = 10
+salary = 80000
+gr = ['Г1', 'Г5']
+pr1 = professor(surname, name, middle_name, sub, work_exp, salary, gr)
+surname= 'Рыбаков'
+name='Степан'
+middle_name='Петрович'
+sub = 'Математика'
+work_exp = 25
+salary = 120000
+gr = ['Г2', 'Г3']
+pr2 = professor(surname, name, middle_name, sub, work_exp, salary, gr)
+
+st1 = student(surname='Аликперов', name='Артем', middle_name='Мурадович', group='Г1', rating=[4,5,3,4])
+st2 = student(surname='Романов', name='Андрей', middle_name='Владимирович', group='Г1', rating=[4,5,5,5])
+st3 = student(surname='Пилипцов', name='Павел', middle_name='Семенович', group='Г2', rating=[4,5,5,5])
+surname= 'Рыбаков'
+name='Степан'
+middle_name='Петрович'
+print(professor.getSubject(surname, name, middle_name))
+group = input('Введите группу: ')
+print(*student.getStudents(group), sep='\n')
